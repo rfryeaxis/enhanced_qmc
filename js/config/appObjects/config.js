@@ -19,7 +19,7 @@ define(function(require){
 						,type: '<div />'
 						,heading: {
 							id: 'container-heading'
-							,text: 'App'
+							,text: 'App Objects'
 							,type: '<h1 />'
 						}
 						,paragraph: {
@@ -41,24 +41,42 @@ define(function(require){
 				,cols : [
 					{
 						idAppend: '-col1'
-						,relativeWidth: 2/10
+						,relativeWidth: 2/15
 						,headerRelativeHeight: 1
 						,rowRelativeHeight: 1
 					}
 					,{
 						idAppend: '-col2'
-						,relativeWidth: 2/10
+						,relativeWidth: 2/15
 						,headerRelativeHeight: 1
 						,rowRelativeHeight: 1			
 					}
 					,{
 						idAppend: '-col3'
-						,relativeWidth: 3/10
+						,relativeWidth: 2/15
+						,headerRelativeHeight: 1
+						,rowRelativeHeight: 1			
+					}
+					,{
+						idAppend: '-col4'
+						,relativeWidth: 1/15
+						,headerRelativeHeight: 1
+						,rowRelativeHeight: 1			
+					}
+					,{
+						idAppend: '-col5'
+						,relativeWidth: 1/15
+						,headerRelativeHeight: 1
+						,rowRelativeHeight: 1			
+					}
+					,{
+						idAppend: '-col6'
+						,relativeWidth: 3/15
 						,headerRelativeHeight: 1
 						,rowRelativeHeight: 1			
 					}
 				]
-				,rowLinkTarget: '/extensions/enhanced_qmc/html/app_detail.html#'
+				,rowLinkTarget: '/extensions/enhanced_qmc/html/appObjectDetail.html#'
 			}
 		}
 	};

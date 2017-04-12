@@ -42,28 +42,12 @@ define(function(require){
 				.text(config.pageContents.container.row.headerRow.paragraph.text)
 		);
 		
-		$('#' + config.pageContents.container.id).append(
-			$(config.pageContents.container.tableContainer.type)
-				.attr('id',config.pageContents.container.tableContainer.id)
-				.attr('class',config.pageContents.container.tableContainer.class)
+		$('#' + config.pageContents.id).append(
+			$(config.pageContents.tableContainer.type)
+				.attr('id',config.pageContents.tableContainer.id)
+				.attr('class',config.pageContents.tableContainer.class)
 		);
 	}
 
 	return draw;
 });
-/*
-				<!-- Page Content -->
-				<div id="page-content-wrapper">
-					<div class="container-fluid">
-						<div class="row">
-							<div class="col-lg-12">
-								<h1>Apps</h1>
-								<p></p>
-								<a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a>
-							</div>
-						</div>
-						<div id = "app_table_container"></div>
-					</div>
-				</div>
-				<!-- /#page-content-wrapper -->
-*/

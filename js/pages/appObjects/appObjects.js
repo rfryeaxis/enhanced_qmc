@@ -24,14 +24,24 @@ require(
 		"js/qlik"
 		,"../../enhanced_qmc/lib/jquery/jquery.js"
 		,"../../enhanced_qmc/lib/bootstrap/js/bootstrap.js"
-		,"../../enhanced_qmc/js/config/app_detail/config.js"
+		,"../../enhanced_qmc/js/config/appObjects/config.js"
+		,"../../enhanced_qmc/js/config/obj-lib/configSidebar.js"
+		,"../../enhanced_qmc/js/pages/obj-lib/drawSidebar.js"
+		,"../../enhanced_qmc/js/pages/obj-lib/drawTable.js"
+		,"../../enhanced_qmc/js/pages/appObjects/drawPageContent.js"
+		,"../../enhanced_qmc/js/pages/appObjects/drawAppObjectTable.js"
 		,"../../enhanced_qmc/js/config/qrsConfig.js"
 	], function 
 	( 
 		qlik
 		,jQuery
 		,bootstrap
-		,config 
+		,config
+		,configSidebar
+		,drawSidebar
+		,drawTable
+		,drawPageContent
+		,drawAppObjectTable
 		,qrs
 	) {
 	
@@ -42,26 +52,23 @@ require(
 	$( "#closePopup" ).click( function () {
 		$( '#popup' ).hide();
 	} );
-
+	
+	var body = $("body");
+	
+	body.append(
+		$('<div />')
+			.attr('id','wrapper')
+			.attr('class',"wrapper toggled")
+	);
+	
+	drawSidebar($('#wrapper'), configSidebar);
+	drawPageContent($('#wrapper'), config);
+	drawAppObjectTable($('#app-table-container'), qrs, drawTable, config.pageContents.table);
+	
 	//callbacks -- inserted here --
 	//open apps -- inserted here --
 	//get objects -- inserted here --
 	//create cubes and lists -- inserted here --
 
-	function getAppProperties(){	
-		var appID = location.hash.substring(1,location.hash.length);
-		var apps$ = qrs.get("/app/" + appID);
-		
-		apps$.subscribe(function(response){
-			var app_label = document.getElementById('app_label');			
-			$(app_label)
-				.text('Application:' + response.name)
-			;
-			
-		});
-	}
-	
-	
-	getAppProperties();
 });
 

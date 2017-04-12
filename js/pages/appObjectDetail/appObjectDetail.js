@@ -24,12 +24,13 @@ require(
 		"js/qlik"
 		,"../../enhanced_qmc/lib/jquery/jquery.js"
 		,"../../enhanced_qmc/lib/bootstrap/js/bootstrap.js"
-		,"../../enhanced_qmc/js/config/apps/config.js"
+		,"../../enhanced_qmc/js/config/appObjectDetail/config.js"
 		,"../../enhanced_qmc/js/config/obj-lib/configSidebar.js"
 		,"../../enhanced_qmc/js/pages/obj-lib/drawSidebar.js"
 		,"../../enhanced_qmc/js/pages/obj-lib/drawTable.js"
-		,"../../enhanced_qmc/js/pages/apps/drawPageContent.js"
-		,"../../enhanced_qmc/js/pages/apps/drawAppTable.js"
+		,"../../enhanced_qmc/js/pages/obj-lib/approveAppObject.js"
+		,"../../enhanced_qmc/js/pages/appObjectDetail/drawPageContent.js"
+		,"../../enhanced_qmc/js/pages/appObjectDetail/drawAppObjectTable.js"
 		,"../../enhanced_qmc/js/config/qrsConfig.js"
 	], function 
 	( 
@@ -40,8 +41,9 @@ require(
 		,configSidebar
 		,drawSidebar
 		,drawTable
+		,approveAppObject
 		,drawPageContent
-		,drawAppTable
+		,drawAppObjectTable
 		,qrs
 	) {
 	
@@ -61,9 +63,21 @@ require(
 			.attr('class',"wrapper toggled")
 	);
 	
+	var appObjectID = location.hash.substring(1,location.hash.length);
+	var apps$ = qrs.get("/app/object/" + appObjectID);
+	
+	apps$.subscribe(function(response){
+		$('#container-heading')
+			.text('App Object: ' + response.name)
+		;
+	});
+	
+	//approveAppObject(qrs, appObjectID, true);
+		
 	drawSidebar($('#wrapper'), configSidebar);
-	drawPageContent($('#wrapper'), config);
-	drawAppTable($('#app-table-container'), qrs, drawTable, config.pageContents.table);
+	
+	drawPageContent($('#wrapper'), approveAppObject, qrs, appObjectID, config);
+	//drawAppObjectTable($('#app-table-container'), qrs, drawTable, config.pageContents.table);
 	
 	//callbacks -- inserted here --
 	//open apps -- inserted here --

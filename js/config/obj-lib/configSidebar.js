@@ -28,7 +28,7 @@ define(function(require){
 						idAppend: '-row1'
 						//,class: ""
 						,text: "App Objects"
-						,href: "#"
+						,href: "appObjects.html"
 						,type: '<li />'
 					}
 					,{
