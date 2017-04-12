@@ -25,8 +25,9 @@ require(
 		,"../../enhanced_qmc/lib/jquery/jquery.js"
 		,"../../enhanced_qmc/lib/bootstrap/js/bootstrap.js"
 		,"../../enhanced_qmc/js/config/apps/config.js"
-		,"../../enhanced_qmc/js/config/obj-lib/config-sidebar.js"
+		,"../../enhanced_qmc/js/config/obj-lib/configSidebar.js"
 		,"../../enhanced_qmc/js/pages/obj-lib/drawSidebar.js"
+		,"../../enhanced_qmc/js/pages/apps/pageContents.js"
 		,"../../enhanced_qmc/js/config/qrsConfig.js"
 	], function 
 	( 
@@ -36,6 +37,7 @@ require(
 		,config
 		,configSidebar
 		,drawSidebar
+		,drawPageContents
 		,qrs
 	) {
 	
@@ -47,13 +49,22 @@ require(
 		$( '#popup' ).hide();
 	} );
 	
-	drawSidebar(configSidebar);
+	var body = $("body");
+	
+	body.append(
+		$('<div />')
+			.attr('id','wrapper')
+			.attr('class',"wrapper toggled")
+	);
+	
+	drawSidebar($('#wrapper'), configSidebar);
+	drawPageContents($('#wrapper'), config);
 	//callbacks -- inserted here --
 	//open apps -- inserted here --
 	//get objects -- inserted here --
 	//create cubes and lists -- inserted here --
 
-		/*
+	/*
 				<!-- Page Content -->
 				<div id="page-content-wrapper">
 					<div class="container-fluid">
@@ -69,25 +80,21 @@ require(
 				</div>
 				<!-- /#page-content-wrapper -->
 
-			</div>
-			<!-- /#wrapper -->
 	}
 	*/
 	function getApps(){
 		var apps$ = qrs.get("/app/full");
 		
 		apps$.subscribe(function(response){
-			console.log(response);
+			var tableConfig = config.pageContents.table;			
+			var app_table_container = document.getElementById('app-table-container');		
 			
-			
-
-			var app_table_container = document.getElementById('app_table_container');			
 			$(app_table_container)
 				.append(
 					$('<table />')
-						.attr('id',config.table.id)
+						.attr('id',tableConfig.id)
 						.attr('class','table table-striped table-hover table-responsive')
-						.attr('style','width:' + config.table.width + 'px')
+						.attr('style','width:' + tableConfig.width + 'px')
 				)
 			;
 			
@@ -105,13 +112,13 @@ require(
 					)
 			;
 			
-			config.table.cols.forEach(function(col){
+			tableConfig.cols.forEach(function(col){
 				$('#app_thead_tr')
 					.append(
 						$('<th />')
 							.attr('id','app_head_tr'+col.idAppend)
 							.text(col.label)
-							.attr('style','width:' + col.relativeWidth * config.table.width + 'px')
+							.attr('style','width:' + col.relativeWidth * tableConfig.width + 'px')
 					)
 			})
 			
@@ -160,19 +167,15 @@ require(
 				;
 			}
 			
-			$('#' + config.table.id + ' > tbody > tr').on('click', function(row) {
+			$('#' + tableConfig.id + ' > tbody > tr').on('click', function(row) {
 				var id = row.currentTarget.childNodes[2].innerHTML;
 				//Go to new page - app detail #id
 				location.href = location.origin + '/extensions/enhanced_qmc/html/app_detail.html#'+ id
 
 			});
-			console.log(app_table_container);
-
 		});
 	}
 	
-	
-	console.log(config);
 	getApps();	
 });
 

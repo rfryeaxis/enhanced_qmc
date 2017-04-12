@@ -1,34 +1,26 @@
 define(function(require){
 	'use strict';
 
-	var draw = function(config){
+	var draw = function(parent, config){
 		
 		//<!-- Example sidebar -->
 		//<!-- https://blackrockdigital.github.io/startbootstrap-simple-sidebar/-->
-		
-		var body = $("body");
-		
-		body.append(
-			$(config.wrapper.type)
-				.attr('id',config.wrapper.id)
-				.attr('class',config.wrapper.class)
+				
+		$(parent).append(
+			$(config.sidebarWrapper.type)
+				.attr('id',config.sidebarWrapper.id)
 		);
 		
-		$('#' + config.wrapper.id).append(
-			$(config.wrapper.sidebarWrapper.type)
-				.attr('id',config.wrapper.sidebarWrapper.id)
-		);
-		
-		$('#' + config.wrapper.sidebarWrapper.id).append(
-			$(config.wrapper.sidebarWrapper.sidebarNavList.type)
-				.attr('id',config.wrapper.sidebarWrapper.sidebarNavList.id)
-				.attr('class',config.wrapper.sidebarWrapper.sidebarNavList.class)
+		$('#' + config.sidebarWrapper.id).append(
+			$(config.sidebarWrapper.sidebarNavList.type)
+				.attr('id',config.sidebarWrapper.sidebarNavList.id)
+				.attr('class',config.sidebarWrapper.sidebarNavList.class)
 		);
 
-		config.wrapper.sidebarWrapper.sidebarNavList.listItems.forEach(function(row){
-			$('#' + config.wrapper.sidebarWrapper.sidebarNavList.id).append(
+		config.sidebarWrapper.sidebarNavList.listItems.forEach(function(row){
+			$('#' + config.sidebarWrapper.sidebarNavList.id).append(
 				$(row.type)
-					.attr('id',config.wrapper.sidebarWrapper.sidebarNavList.id + row.idAppend)
+					.attr('id',config.sidebarWrapper.sidebarNavList.id + row.idAppend)
 					.attr('class',row.class)
 					.append(
 						$('<a />')
