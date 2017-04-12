@@ -25,13 +25,17 @@ require(
 		,"../../enhanced_qmc/lib/jquery/jquery.js"
 		,"../../enhanced_qmc/lib/bootstrap/js/bootstrap.js"
 		,"../../enhanced_qmc/js/config/apps/config.js"
+		,"../../enhanced_qmc/js/config/obj-lib/config-sidebar.js"
+		,"../../enhanced_qmc/js/pages/obj-lib/drawSidebar.js"
 		,"../../enhanced_qmc/js/config/qrsConfig.js"
 	], function 
 	( 
 		qlik
 		,jQuery
 		,bootstrap
-		,config 
+		,config
+		,configSidebar
+		,drawSidebar
 		,qrs
 	) {
 	
@@ -42,17 +46,40 @@ require(
 	$( "#closePopup" ).click( function () {
 		$( '#popup' ).hide();
 	} );
-
+	
+	drawSidebar(configSidebar);
 	//callbacks -- inserted here --
 	//open apps -- inserted here --
 	//get objects -- inserted here --
 	//create cubes and lists -- inserted here --
 
-	function getApps(){	
+		/*
+				<!-- Page Content -->
+				<div id="page-content-wrapper">
+					<div class="container-fluid">
+						<div class="row">
+							<div class="col-lg-12">
+								<h1>Apps</h1>
+								<p></p>
+								<a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a>
+							</div>
+						</div>
+						<div id = "app_table_container"></div>
+					</div>
+				</div>
+				<!-- /#page-content-wrapper -->
+
+			</div>
+			<!-- /#wrapper -->
+	}
+	*/
+	function getApps(){
 		var apps$ = qrs.get("/app/full");
 		
 		apps$.subscribe(function(response){
 			console.log(response);
+			
+			
 
 			var app_table_container = document.getElementById('app_table_container');			
 			$(app_table_container)
@@ -144,8 +171,8 @@ require(
 		});
 	}
 	
-	console.log(config);
 	
-	getApps();
+	console.log(config);
+	getApps();	
 });
 

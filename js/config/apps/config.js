@@ -1,7 +1,7 @@
 define(function(require){
 	'use strict';
 
-	var tableConfig = {
+	var config = {
 		table: {
 			id: "app_table"
 			,width: 500
@@ -9,21 +9,21 @@ define(function(require){
 			,relativeHeight: 1
 			,cols : [
 				{
-					idAppend: '_col1'
+					idAppend: '-col1'
 					,label: "App Name"
 					,relativeWidth: 2/10
 					,headerRelativeHeight: 1
 					,rowRelativeHeight: 1
 				}
 				,{
-					idAppend: '_col2'
+					idAppend: '-col2'
 					,label: "Owner"
 					,relativeWidth: 2/10
 					,headerRelativeHeight: 1
 					,rowRelativeHeight: 1			
 				}
 				,{
-					idAppend: '_col3'
+					idAppend: '-col3'
 					,label: "ID"
 					,relativeWidth: 2/10
 					,headerRelativeHeight: 1
@@ -33,5 +33,5 @@ define(function(require){
 		}
 	};
 	
-	return tableConfig;
+	return config;
 })
