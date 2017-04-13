@@ -1,26 +1,50 @@
 define(function(require){
 	'use strict';
 
-	var draw = function(parent, config){
-		
+	var draw = function(require, parent){
+
 		//<!-- Example sidebar -->
 		//<!-- https://blackrockdigital.github.io/startbootstrap-simple-sidebar/-->
-				
-		$(parent).append(
-			$(config.sidebarWrapper.type)
-				.attr('id',config.sidebarWrapper.id)
+		
+		parent.append(
+			$('<div />')
+				.attr('id',"sidebar-nav")
+				.attr('class',"sidebar-nav")
 		);
 		
-		$('#' + config.sidebarWrapper.id).append(
-			$(config.sidebarWrapper.sidebarNavList.type)
-				.attr('id',config.sidebarWrapper.sidebarNavList.id)
-				.attr('class',config.sidebarWrapper.sidebarNavList.class)
-		);
+		var sidebarNav = $("#sidebar-nav");
+		
+		var sidebarItems = [
+			{
+				idAppend: '-row1'
+				,class: "sidebar-brand"
+				,text: "Enhanced QMC"
+				,href: "#"
+			}
+			,{
+				idAppend: '-row1'
+				//,class: ""
+				,text: "Apps"
+				,href: "apps.html"
+			}
+			,{
+				idAppend: '-row1'
+				//,class: ""
+				,text: "App Objects"
+				,href: "appObjects.html"
+			}
+			,{
+				idAppend: '-row1'
+				//,class: ""
+				,text: "Data Connections"
+				,href: "#"
+			}
+		];
 
-		config.sidebarWrapper.sidebarNavList.listItems.forEach(function(row){
-			$('#' + config.sidebarWrapper.sidebarNavList.id).append(
-				$(row.type)
-					.attr('id',config.sidebarWrapper.sidebarNavList.id + row.idAppend)
+		sidebarItems.forEach(function(row){
+			sidebarNav.append(
+				$('<li />')
+					.attr('id',sidebarNav.id + row.idAppend)
 					.attr('class',row.class)
 					.append(
 						$('<a />')

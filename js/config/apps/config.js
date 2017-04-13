@@ -41,19 +41,19 @@ define(function(require){
 				,cols : [
 					{
 						idAppend: '-col1'
-						,relativeWidth: 2/10
+						,relativeWidth: 6/20
 						,headerRelativeHeight: 1
 						,rowRelativeHeight: 1
 					}
 					,{
 						idAppend: '-col2'
-						,relativeWidth: 2/10
+						,relativeWidth: 4/20
 						,headerRelativeHeight: 1
 						,rowRelativeHeight: 1			
 					}
 					,{
 						idAppend: '-col3'
-						,relativeWidth: 3/10
+						,relativeWidth: 8/20
 						,headerRelativeHeight: 1
 						,rowRelativeHeight: 1			
 					}

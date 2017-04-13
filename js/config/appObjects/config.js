@@ -41,37 +41,37 @@ define(function(require){
 				,cols : [
 					{
 						idAppend: '-col1'
-						,relativeWidth: 2/15
+						,relativeWidth: 4/20
 						,headerRelativeHeight: 1
 						,rowRelativeHeight: 1
 					}
 					,{
 						idAppend: '-col2'
-						,relativeWidth: 2/15
+						,relativeWidth: 2/20
 						,headerRelativeHeight: 1
 						,rowRelativeHeight: 1			
 					}
 					,{
 						idAppend: '-col3'
-						,relativeWidth: 2/15
+						,relativeWidth: 4/20
 						,headerRelativeHeight: 1
 						,rowRelativeHeight: 1			
 					}
 					,{
 						idAppend: '-col4'
-						,relativeWidth: 1/15
+						,relativeWidth: 2/20
 						,headerRelativeHeight: 1
 						,rowRelativeHeight: 1			
 					}
 					,{
 						idAppend: '-col5'
-						,relativeWidth: 1/15
+						,relativeWidth: 2/20
 						,headerRelativeHeight: 1
 						,rowRelativeHeight: 1			
 					}
 					,{
 						idAppend: '-col6'
-						,relativeWidth: 3/15
+						,relativeWidth: 5/20
 						,headerRelativeHeight: 1
 						,rowRelativeHeight: 1			
 					}

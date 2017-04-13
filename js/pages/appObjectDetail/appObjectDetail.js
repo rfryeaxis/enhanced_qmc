@@ -24,27 +24,29 @@ require(
 		"js/qlik"
 		,"../../enhanced_qmc/lib/jquery/jquery.js"
 		,"../../enhanced_qmc/lib/bootstrap/js/bootstrap.js"
-		,"../../enhanced_qmc/js/config/appObjectDetail/config.js"
-		,"../../enhanced_qmc/js/config/obj-lib/configSidebar.js"
+		,"../../enhanced_qmc/js/config/qrsConfig.js"
 		,"../../enhanced_qmc/js/pages/obj-lib/drawSidebar.js"
+		,"../../enhanced_qmc/js/pages/obj-lib/drawContentWrapper.js"
+		,"../../enhanced_qmc/js/pages/obj-lib/drawContentHeader.js"
 		,"../../enhanced_qmc/js/pages/obj-lib/drawTable.js"
 		,"../../enhanced_qmc/js/pages/obj-lib/approveAppObject.js"
-		,"../../enhanced_qmc/js/pages/appObjectDetail/drawPageContent.js"
-		,"../../enhanced_qmc/js/pages/appObjectDetail/drawAppObjectTable.js"
-		,"../../enhanced_qmc/js/config/qrsConfig.js"
+		
+		,"../../enhanced_qmc/js/config/appObjectDetail/config.js"
+		,"../../enhanced_qmc/js/pages/appObjects/drawAppObjectTable.js"
 	], function 
-	( 
+	(
 		qlik
 		,jQuery
 		,bootstrap
-		,config
-		,configSidebar
+		,qrs
 		,drawSidebar
+		,drawContentWrapper
+		,drawContentHeader
 		,drawTable
 		,approveAppObject
-		,drawPageContent
-		,drawAppObjectTable
-		,qrs
+
+		,config
+		//,drawAppObjectTable
 	) {
 	
 	qlik.setOnError( function ( error ) {
@@ -54,30 +56,56 @@ require(
 	$( "#closePopup" ).click( function () {
 		$( '#popup' ).hide();
 	} );
-	
-	var body = $("body");
-	
-	body.append(
-		$('<div />')
-			.attr('id','wrapper')
-			.attr('class',"wrapper toggled")
-	);
+
+	var contentWrapper = drawContentWrapper(require, drawSidebar);
+	drawContentHeader(require, contentWrapper, 'App Object Detail');
 	
 	var appObjectID = location.hash.substring(1,location.hash.length);
-	var apps$ = qrs.get("/app/object/" + appObjectID);
-	
-	apps$.subscribe(function(response){
-		$('#container-heading')
-			.text('App Object: ' + response.name)
-		;
+	var appObjectID$ = qrs.get("/app/object/" + appObjectID);
+	var appName;
+		
+	appObjectID$.subscribe(function(response){		
+		console.log(response);
+		appName = response.name
+		$(contentWrapper).append($('<div >')
+			.text('App Object: ' + appName)
+			.append($('<div />')
+				.attr('id','approved')
+				.text('Approved: ' + response.approved)
+			)
+			.append($('<div />')
+				.text('Published: ' + response.published)
+			)
+		);
+		
+		$(contentWrapper).append(
+		$('<button />')
+			.attr('type','button')
+			.on('click', function(){
+				approveAppObject(qrs, appObjectID, true)
+				
+				location.reload()
+			})
+			.text('approve')
+		);
+
+		$(contentWrapper).append(
+		$('<button />')
+			.attr('type','button')
+			.on('click', function(){
+				approveAppObject(qrs, appObjectID, false)
+				
+				location.reload()
+			})
+			.text('unapprove')
+		);
 	});
 	
-	//approveAppObject(qrs, appObjectID, true);
-		
-	drawSidebar($('#wrapper'), configSidebar);
+
 	
-	drawPageContent($('#wrapper'), approveAppObject, qrs, appObjectID, config);
-	//drawAppObjectTable($('#app-table-container'), qrs, drawTable, config.pageContents.table);
+	
+
+	//drawAppObjectTable(require, contentWrapper, qrs, drawTable, config.pageContents.table);
 	
 	//callbacks -- inserted here --
 	//open apps -- inserted here --

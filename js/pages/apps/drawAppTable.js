@@ -1,7 +1,7 @@
 define(function(require){
 	'use strict';
 
-	var draw = function(parent, qrs, drawTable, config){
+	var draw = function(require, parent, qrs, drawTable, config){
 		
 		var apps$ = qrs.get("/app/full");
 		
@@ -23,15 +23,18 @@ define(function(require){
 						,app.owner.name
 						,app.id
 					]
-				})		
+				})	
 			})
 			
-			drawTable($(parent), tableArr, config);
+			var parentHeight = parent[0].clientHeight * .75;
+			var parentWidth = parent[0].clientWidth;
+								
+			drawTable($(parent), tableArr, config, parentHeight, parentWidth);
 			
 			$('#' + config.id + ' > tbody > tr').on('click', function(row) {
 				var id = row.currentTarget.childNodes[2].innerHTML;
 				//Go to new page - app detail #id
-				location.href = location.origin + config.rowLinkTarget + id
+				location.href = location.origin + '/extensions/enhanced_qmc/html/app_detail.html#' + id
 			});
 		});
 	}

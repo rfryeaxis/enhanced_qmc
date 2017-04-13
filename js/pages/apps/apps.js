@@ -24,25 +24,25 @@ require(
 		"js/qlik"
 		,"../../enhanced_qmc/lib/jquery/jquery.js"
 		,"../../enhanced_qmc/lib/bootstrap/js/bootstrap.js"
-		,"../../enhanced_qmc/js/config/apps/config.js"
-		,"../../enhanced_qmc/js/config/obj-lib/configSidebar.js"
-		,"../../enhanced_qmc/js/pages/obj-lib/drawSidebar.js"
-		,"../../enhanced_qmc/js/pages/obj-lib/drawTable.js"
-		,"../../enhanced_qmc/js/pages/apps/drawPageContent.js"
-		,"../../enhanced_qmc/js/pages/apps/drawAppTable.js"
 		,"../../enhanced_qmc/js/config/qrsConfig.js"
+		,"../../enhanced_qmc/js/config/apps/config.js"
+		,"../../enhanced_qmc/js/pages/obj-lib/drawSidebar.js"
+		,"../../enhanced_qmc/js/pages/obj-lib/drawContentWrapper.js"
+		,"../../enhanced_qmc/js/pages/obj-lib/drawContentHeader.js"
+		,"../../enhanced_qmc/js/pages/obj-lib/drawTable.js"
+		,"../../enhanced_qmc/js/pages/apps/drawAppTable.js"
 	], function 
-	( 
+	(
 		qlik
 		,jQuery
 		,bootstrap
-		,config
-		,configSidebar
-		,drawSidebar
-		,drawTable
-		,drawPageContent
-		,drawAppTable
 		,qrs
+		,config
+		,drawSidebar
+		,drawContentWrapper
+		,drawContentHeader
+		,drawTable
+		,drawAppTable
 	) {
 	
 	qlik.setOnError( function ( error ) {
@@ -52,18 +52,10 @@ require(
 	$( "#closePopup" ).click( function () {
 		$( '#popup' ).hide();
 	} );
-	
-	var body = $("body");
-	
-	body.append(
-		$('<div />')
-			.attr('id','wrapper')
-			.attr('class',"wrapper toggled")
-	);
-	
-	drawSidebar($('#wrapper'), configSidebar);
-	drawPageContent($('#wrapper'), config);
-	drawAppTable($('#app-table-container'), qrs, drawTable, config.pageContents.table);
+
+	var contentWrapper = drawContentWrapper(require, drawSidebar);
+	drawContentHeader(require, contentWrapper, 'Apps');
+	drawAppTable(require, contentWrapper, qrs, drawTable, config.pageContents.table);
 	
 	//callbacks -- inserted here --
 	//open apps -- inserted here --
