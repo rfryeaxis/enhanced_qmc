@@ -37,7 +37,7 @@ define(function(require){
 				idAppend: '-row1'
 				//,class: ""
 				,text: "Data Connections"
-				,href: "#"
+				,href: "data_connections.html"
 			}
 		];
 

@@ -31,8 +31,7 @@ require(
 		,"../../enhanced_qmc/js/pages/obj-lib/drawTable.js"
 		,"../../enhanced_qmc/js/pages/obj-lib/approveAppObject.js"
 		
-		,"../../enhanced_qmc/js/config/appObjectDetail/config.js"
-		,"../../enhanced_qmc/js/pages/appObjects/drawAppObjectTable.js"
+		,"../../enhanced_qmc/js/config/dataConnections/config.js"
 	], function 
 	(
 		qlik
@@ -59,44 +58,37 @@ require(
 	var contentWrapper = drawContentWrapper(require, drawSidebar);
 	drawContentHeader(require, contentWrapper, 'App Object Detail');
 	
-	var appObjectID = location.hash.substring(1,location.hash.length);
-	var appObject$ = qrs.get("/app/object/" + appObjectID);
-	var appName;
+	var appID = location.hash.substring(1,location.hash.length);
+	var app$ = qrs.get("/app/" + appID);
 		
-	appObject$.subscribe(function(response){		
+	app$.subscribe(function(response){		
 		appName = response.name
 		$(contentWrapper).append($('<div >')
-			.text('App Object: ' + appName)
-			.append($('<div />')
-				.attr('id','approved')
-				.text('Approved: ' + response.approved)
-			)
-			.append($('<div />')
-				.text('Published: ' + response.published)
-			)
-		);
-		
-		$(contentWrapper).append(
-		$('<button />')
-			.attr('type','button')
-			.on('click', function(){
-				approveAppObject(qrs, appObjectID, true)
+			.text('New Connection')
+		)
+		.append($('<p />'))
+		.append($('<p />')
+			.attr('id','new-connection-name-label')
+			.text('Enter New Connection Name: ')
+		)
+		.append($('<input />')
+			.attr('id','new-connection-name')
+		)
+		.append($('<p />'))
+		.append($('<p />')
+			.attr('id','new-connection-name-label')
+			.text('Enter New Connection Definition: ')
+		)
+		.append($('<input />')
+			.attr('id','new-connection-definition')
+		)
+		.append($('<p />'))
+		.append($('<button />')
+			.on('click',function(){
 				
-				location.reload()
 			})
-			.text('approve')
-		);
-
-		$(contentWrapper).append(
-		$('<button />')
-			.attr('type','button')
-			.on('click', function(){
-				approveAppObject(qrs, appObjectID, false)
-				
-				location.reload()
-			})
-			.text('unapprove')
-		);
+			.text('Create Connection')
+		)
 	});
 	
 	//callbacks -- inserted here --
