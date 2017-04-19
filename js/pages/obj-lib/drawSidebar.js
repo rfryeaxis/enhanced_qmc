@@ -16,25 +16,31 @@ define(function(require){
 		
 		var sidebarItems = [
 			{
-				idAppend: '-row1'
+				idAppend: '-row-title'
 				,class: "sidebar-brand"
 				,text: "Enhanced QMC"
 				,href: "#"
 			}
 			,{
-				idAppend: '-row1'
+				idAppend: '-row-apps'
 				//,class: ""
 				,text: "Apps"
 				,href: "apps.html"
 			}
 			,{
-				idAppend: '-row1'
+				idAppend: '-row-new-app'
+				//,class: ""
+				,text: "New App"
+				,href: "new_app.html"
+			}
+			,{
+				idAppend: '-row-app-objects'
 				//,class: ""
 				,text: "App Objects"
 				,href: "appObjects.html"
 			}
 			,{
-				idAppend: '-row1'
+				idAppend: '-row-data-connections'
 				//,class: ""
 				,text: "Data Connections"
 				,href: "data_connections.html"

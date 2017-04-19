@@ -18,23 +18,30 @@ define(function(require){
 						,type: '<li />'
 					}
 					,{
-						idAppend: '-row1'
+						idAppend: '-row2'
 						//,class: ""
 						,text: "Apps"
 						,href: "apps.html"
 						,type: '<li />'
 					}
 					,{
-						idAppend: '-row1'
+						idAppend: '-row3'
 						//,class: ""
 						,text: "App Objects"
 						,href: "appObjects.html"
 						,type: '<li />'
 					}
 					,{
-						idAppend: '-row1'
+						idAppend: '-row4'
 						//,class: ""
 						,text: "Data Connections"
+						,href: "#"
+						,type: '<li />'
+					}
+					,{
+						idAppend: '-row5'
+						//,class: ""
+						,text: "New App"
 						,href: "#"
 						,type: '<li />'
 					}

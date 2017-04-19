@@ -29,11 +29,10 @@ require(
 		,"../../enhanced_qmc/js/pages/obj-lib/drawContentWrapper.js"
 		,"../../enhanced_qmc/js/pages/obj-lib/drawContentHeader.js"
 		,"../../enhanced_qmc/js/pages/obj-lib/drawTable.js"
-		,"../../enhanced_qmc/js/pages/obj-lib/approveAppObject.js"
 		
 		,"../../enhanced_qmc/js/config/appObjectDetail/config.js"
-		,"../../enhanced_qmc/js/pages/appObjects/drawAppObjectTable.js"
-	], function 
+		,"../../enhanced_qmc/js/pages/obj-lib/copyAppObject.js"
+		], function 
 	(
 		qlik
 		,jQuery
@@ -43,9 +42,9 @@ require(
 		,drawContentWrapper
 		,drawContentHeader
 		,drawTable
-		,approveAppObject
 
 		,config
+		,copyAppObject
 	) {
 	
 	qlik.setOnError( function ( error ) {
@@ -58,15 +57,30 @@ require(
 
 	var contentWrapper = drawContentWrapper(require, drawSidebar);
 	drawContentHeader(require, contentWrapper, 'App Object Detail');
+
+	var populateAppList = function(parent){
+		var apps$ = qrs.get('/app/full', "application/json");
+		apps$.subscribe(function(response){
+			response.forEach(function(app) {
+				parent.append($('<option />')
+					.attr('id','option-app-'+app.id)
+					.attr('value',app.id)
+					.text(app.name)
+				)
+			})
+		});
+	}
 	
 	var appObjectID = location.hash.substring(1,location.hash.length);
 	var appObject$ = qrs.get("/app/object/" + appObjectID);
 	var appName;
 		
 	appObject$.subscribe(function(response){		
-		appName = response.name
+		var appObjectName = response.name
+		var appObjectID = response.id
+		
 		$(contentWrapper).append($('<div >')
-			.text('App Object: ' + appName)
+			.text('App Object: ' + appObjectName)
 			.append($('<div />')
 				.attr('id','approved')
 				.text('Approved: ' + response.approved)
@@ -97,6 +111,34 @@ require(
 			})
 			.text('unapprove')
 		);
+		
+				
+		$(contentWrapper).append($('<p />')
+		)
+		
+		$(contentWrapper).append($('<div />')
+			.attr('id','new-app-label')
+			.text('Select app to copy to')
+		)
+		
+		$(contentWrapper).append($('<select />')
+			.attr('id','new-app')
+		)
+		
+		$(contentWrapper).append($('<p />')
+		)
+		
+		$(contentWrapper).append($('<button />')
+			.attr('id','copy-app-object')
+			.on('click',function(){
+				console.log(response);
+				copyAppObject(qrs, response.id, $('#new-app')[0].value);
+			})
+			.text('Copy App Object')
+		)
+		
+		populateAppList($('#new-app'));
+		
 	});
 	
 	//callbacks -- inserted here --

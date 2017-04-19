@@ -30,8 +30,8 @@ require(
 		,"../../enhanced_qmc/js/pages/obj-lib/drawContentHeader.js"
 		,"../../enhanced_qmc/js/pages/obj-lib/drawTable.js"
 		
-		,"../../enhanced_qmc/js/config/dataConnections/config.js"
-		,"../../enhanced_qmc/js/pages/obj-lib/createDataConnection.js"
+		,"../../enhanced_qmc/js/config/newApp/config.js"
+		,"../../enhanced_qmc/js/pages/obj-lib/copyApp.js"
 	], function 
 	(
 		qlik
@@ -44,7 +44,7 @@ require(
 		,drawTable
 
 		,config
-		,createDataConnection
+		,copyApp
 	) {
 	
 	qlik.setOnError( function ( error ) {
@@ -56,34 +56,50 @@ require(
 	} );
 
 	var contentWrapper = drawContentWrapper(require, drawSidebar);
-	drawContentHeader(require, contentWrapper, 'Data Connections');
+	drawContentHeader(require, contentWrapper, 'New App');
+	
+	var populateUserList = function(parent){
+		var users$ = qrs.get('/user/full', "application/json");
+		users$.subscribe(function(response){
+			response.forEach(function(user) {
+				parent.append($('<option />')
+					.attr('id','option-user-'+user.id)
+					.attr('value',user.id)
+					.text(user.name)
+				)
+			})
+		});
+	}
 	
 	$(contentWrapper).append($('<div >')
-		.text('New Connection')
+		.text('New App')
 	)
 	.append($('<p />'))
 	.append($('<p />')
-		.attr('id','new-connection-name-label')
-		.text('Enter New Connection Name: ')
+		.attr('id','new-app-name-label')
+		.text('Enter New App Name: ')
 	)
 	.append($('<input />')
-		.attr('id','new-connection-name')
+		.attr('id','new-app-name')
 	)
-	.append($('<p />'))
 	.append($('<p />')
-		.attr('id','new-connection-definition-label')
-		.text('Enter New Connection Definition: ')
+		.attr('id','new-app-owner-label')
+		.text('Enter New App Owner: ')
 	)
-	.append($('<input />')
-		.attr('id','new-connection-definition')
+	.append($('<select />')
+		.attr('id','new-app-owner')
 	)
 	.append($('<p />'))
 	.append($('<button />')
 		.on('click',function(){
-			createDataConnection(qrs, $('#new-connection-name')[0].value, $('#new-connection-definition')[0].value);
+			copyApp(qrs, config.templates.QVDGenerator, 'E_' + $('#new-app-name')[0].value, $('#new-app-owner')[0].value);
+			copyApp(qrs, config.templates.QVDGenerator, 'T_' + $('#new-app-name')[0].value, $('#new-app-owner')[0].value);
+			copyApp(qrs, config.templates.FrontEnd, $('#new-app-name')[0].value, $('#new-app-owner')[0].value);
 		})
-		.text('Create Connection')
+		.text('Create App')
 	)
+	
+	populateUserList($('#new-app-owner'));
 	
 	//callbacks -- inserted here --
 	//open apps -- inserted here --

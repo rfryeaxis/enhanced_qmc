@@ -14,8 +14,8 @@ define(function(require){
 			var object$ = qrs.get("/dataconnection/"+response.id);
 			var update$ = object$
 			.mergeMap(m=>{
-			m.engineObjectId = response.id;
-			return qrs.put("/dataconnection/" + response.id,JSON.stringify(m),"application/json");
+				m.engineObjectId = response.id;
+				return qrs.put("/dataconnection/" + response.id,JSON.stringify(m),"application/json");
 			});	
 			update$.subscribe(s=>console.log(s));
 		})
