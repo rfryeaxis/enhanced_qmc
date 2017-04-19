@@ -32,6 +32,7 @@ require(
 		,"../../enhanced_qmc/js/pages/obj-lib/approveAppObject.js"
 		
 		,"../../enhanced_qmc/js/config/dataConnections/config.js"
+		,"../../enhanced_qmc/js/pages/obj-lib/createDataConnection.js"
 	], function 
 	(
 		qlik
@@ -56,7 +57,7 @@ require(
 	} );
 
 	var contentWrapper = drawContentWrapper(require, drawSidebar);
-	drawContentHeader(require, contentWrapper, 'App Object Detail');
+	drawContentHeader(require, contentWrapper, 'Data Connections');
 	
 	var appID = location.hash.substring(1,location.hash.length);
 	var app$ = qrs.get("/app/" + appID);
@@ -76,7 +77,7 @@ require(
 		)
 		.append($('<p />'))
 		.append($('<p />')
-			.attr('id','new-connection-name-label')
+			.attr('id','new-connection-definition-label')
 			.text('Enter New Connection Definition: ')
 		)
 		.append($('<input />')
@@ -85,7 +86,28 @@ require(
 		.append($('<p />'))
 		.append($('<button />')
 			.on('click',function(){
+				createDataConnection(qrs, $('#new-connection-name')[0].value, $('#new-connection-definition')[0].value);
+				/*
+				var connectionConfig = {
+					name: $('#new-connection-name')[0].value
+					,connectionString: $('#new-connection-definition')[0].value
+					,type: "folder"
+				};
+												
+				var newConnection$ = qrs.post("/dataconnection",JSON.stringify(connectionConfig),"application/json");
 				
+				newConnection$.subscribe(function(response){
+					console.log(response);
+
+					var object$ = qrs.get("/dataconnection/"+response.id);
+					var update$ = object$
+					.mergeMap(m=>{
+					m.engineObjectId = response.id;
+					return qrs.put("/dataconnection/" + response.id,JSON.stringify(m),"application/json");
+					});	
+					update$.subscribe(s=>console.log(s));
+				})
+				*/
 			})
 			.text('Create Connection')
 		)
