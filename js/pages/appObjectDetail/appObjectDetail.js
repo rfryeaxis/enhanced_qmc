@@ -26,12 +26,13 @@ require(
 		,"../../enhanced_qmc/lib/bootstrap/js/bootstrap.js"
 		,"../../enhanced_qmc/js/config/qrsConfig.js"
 		,"../../enhanced_qmc/js/pages/obj-lib/drawSidebar.js"
+		,"../../enhanced_qmc/js/pages/obj-lib/drawTopBar.js"
 		,"../../enhanced_qmc/js/pages/obj-lib/drawContentWrapper.js"
 		,"../../enhanced_qmc/js/pages/obj-lib/drawContentHeader.js"
 		,"../../enhanced_qmc/js/pages/obj-lib/drawTable.js"
 		
 		,"../../enhanced_qmc/js/config/appObjectDetail/config.js"
-		,"../../enhanced_qmc/js/pages/obj-lib/copyAppObject.js"
+		,"../../enhanced_qmc/js/pages/obj-lib/approveAppObject.js"
 		], function 
 	(
 		qlik
@@ -39,12 +40,13 @@ require(
 		,bootstrap
 		,qrs
 		,drawSidebar
+		,drawTopBar
 		,drawContentWrapper
 		,drawContentHeader
 		,drawTable
 
 		,config
-		,copyAppObject
+		,approveAppObject
 	) {
 	
 	qlik.setOnError( function ( error ) {
@@ -55,9 +57,9 @@ require(
 		$( '#popup' ).hide();
 	} );
 
-	var contentWrapper = drawContentWrapper(require, drawSidebar);
+	var contentWrapper = drawContentWrapper(require, drawTopBar, drawSidebar);
 	drawContentHeader(require, contentWrapper, 'App Object Detail');
-
+	/*
 	var populateAppList = function(parent){
 		var apps$ = qrs.get('/app/full', "application/json");
 		apps$.subscribe(function(response){
@@ -70,7 +72,7 @@ require(
 			})
 		});
 	}
-	
+	*/
 	var appObjectID = location.hash.substring(1,location.hash.length);
 	var appObject$ = qrs.get("/app/object/" + appObjectID);
 	var appName;
@@ -115,7 +117,7 @@ require(
 				
 		$(contentWrapper).append($('<p />')
 		)
-		
+		/*
 		$(contentWrapper).append($('<div />')
 			.attr('id','new-app-label')
 			.text('Select app to copy to')
@@ -138,7 +140,7 @@ require(
 		)
 		
 		populateAppList($('#new-app'));
-		
+		*/
 	});
 	
 	//callbacks -- inserted here --

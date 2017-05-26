@@ -26,6 +26,7 @@ define(function(){
 				.attr('class','col-lg-12')
 				.append($('<h1 />')
 					.attr('id', 'container-header')
+					.attr('style','margin-top:2.5%')
 					.text(headerLabel)
 				)
 			)

@@ -26,6 +26,7 @@ require(
 		,"../../enhanced_qmc/lib/bootstrap/js/bootstrap.js"
 		,"../../enhanced_qmc/js/config/qrsConfig.js"
 		,"../../enhanced_qmc/js/pages/obj-lib/drawSidebar.js"
+		,"../../enhanced_qmc/js/pages/obj-lib/drawTopBar.js"
 		,"../../enhanced_qmc/js/pages/obj-lib/drawContentWrapper.js"
 		,"../../enhanced_qmc/js/pages/obj-lib/drawContentHeader.js"
 		,"../../enhanced_qmc/js/pages/obj-lib/drawTable.js"
@@ -39,6 +40,7 @@ require(
 		,bootstrap
 		,qrs
 		,drawSidebar
+		,drawTopBar
 		,drawContentWrapper
 		,drawContentHeader
 		,drawTable
@@ -55,7 +57,7 @@ require(
 		$( '#popup' ).hide();
 	} );
 
-	var contentWrapper = drawContentWrapper(require, drawSidebar);
+	var contentWrapper = drawContentWrapper(require, drawTopBar, drawSidebar);
 	drawContentHeader(require, contentWrapper, 'Data Connections');
 	
 	$(contentWrapper).append($('<div >')

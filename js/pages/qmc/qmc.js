@@ -25,26 +25,26 @@ require(
 		,"../../enhanced_qmc/lib/jquery/jquery.js"
 		,"../../enhanced_qmc/lib/bootstrap/js/bootstrap.js"
 		,"../../enhanced_qmc/js/config/qrsConfig.js"
-		,"../../enhanced_qmc/js/config/apps/config.js"
 		,"../../enhanced_qmc/js/pages/obj-lib/drawSidebar.js"
 		,"../../enhanced_qmc/js/pages/obj-lib/drawTopBar.js"
 		,"../../enhanced_qmc/js/pages/obj-lib/drawContentWrapper.js"
 		,"../../enhanced_qmc/js/pages/obj-lib/drawContentHeader.js"
 		,"../../enhanced_qmc/js/pages/obj-lib/drawTable.js"
-		,"../../enhanced_qmc/js/pages/apps/drawAppTable.js"
+		
+		,"../../enhanced_qmc/js/config/newApp/config.js"
 	], function 
 	(
 		qlik
 		,jQuery
 		,bootstrap
 		,qrs
-		,config
 		,drawSidebar
 		,drawTopBar
 		,drawContentWrapper
 		,drawContentHeader
 		,drawTable
-		,drawAppTable
+
+		,config
 	) {
 	
 	qlik.setOnError( function ( error ) {
@@ -55,10 +55,15 @@ require(
 		$( '#popup' ).hide();
 	} );
 
-	var contentWrapper = drawContentWrapper(require, drawTopBar, drawSidebar);
-	drawContentHeader(require, contentWrapper, 'Apps');
-	drawAppTable(require, contentWrapper, qrs, drawTable, config.pageContents.table);
+	var contentWrapper = drawContentWrapper(require, drawTopBar);
 	
+	$(contentWrapper).append($('<div />')
+		.attr('style','width:100%; height:100%')
+		.html("<iframe style='width:100%;height:100%; margin-top:2.5%;' src='https://qliksenseserver/qmc/'></iframe>")
+	)
+	;
+
+		
 	//callbacks -- inserted here --
 	//open apps -- inserted here --
 	//get objects -- inserted here --
